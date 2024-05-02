@@ -30,10 +30,77 @@ under the License.
     
     <entity entity-name="fmVehicle" package-name="org.apache.ofbiz.fleetmanagement" title="Fleet Management Vehicle Entity">
         <field name="vehicleId" type="id"><description>primary sequenced ID</description></field>
-        <field name="vehicleNumber" type="short-varchar"></field>
-		<field name="vehicleDescription" type="description"></field>
-		<field name="vehicleType" type="short-varchar"></field>
+        <field name="identificationNumber" type="short-varchar"></field>
+		<field name="description" type="description"></field>
+		<field name="type" type="short-varchar"></field>
+		<field name="make" type="short-varchar"></field>
+		<field name="tankCapacity" type="numeric"></field>
+		<field name="avgMilage" type="numeric"></field>
         <prim-key field="vehicleId"/>
+    </entity>
+    
+    <entity entity-name="fmMaintenanceType" package-name="org.apache.ofbiz.fleetmanagement" title="Fleet Management Maintencance Type Entity">
+        <field name="maintenanceTypeId" type="id"><description>primary sequenced ID</description></field>
+        <field name="name" type="short-varchar"></field>
+        <field name="type" type="short-varchar"></field>
+        <field name="description" type="description"></field>
+        <prim-key field="maintenanceTypeId"/>
+    </entity>
+    
+    <entity entity-name="fmMaintenance" package-name="org.apache.ofbiz.fleetmanagement" title="Fleet Management Maintencance Entity">
+        <field name="id" type="id"><description>primary sequenced ID</description></field>
+		<field name="date" type="date-time"></field>
+		<field name="details" type="description"></field>
+		<field name="vehicleId" type="id"></field>
+		<field name="maintenanceTypeId" type="id"></field>
+        <prim-key field="id"/>
+        <relation type="one" fk-name="VEHICLE_MAINTN" rel-entity-name="fmVehicle">
+        	<key-map field-name="vehicleId"/>
+      	</relation>
+      	<relation type="one" fk-name="MAINTN_TYPE" rel-entity-name="fmMaintenanceType">
+        	<key-map field-name="maintenanceTypeId"/>
+      	</relation>
+    </entity>
+    
+    <entity entity-name="fmDriver" package-name="org.apache.ofbiz.fleetmanagement" title="Fleet Management Driver Entity">
+        <field name="driverId" type="id"><description>primary sequenced ID</description></field>
+        <field name="name" type="short-varchar"></field>
+		<field name="licenseNumber" type="short-varchar"></field>
+		<field name="address" type="description"></field>
+		<field name="phone" type="tel-number"></field>
+        <prim-key field="driverId"/>
+    </entity>
+    
+     <entity entity-name="fmTrip" package-name="org.apache.ofbiz.fleetmanagement" title="Fleet Management Trip Entity">
+        <field name="id" type="id"><description>primary sequenced ID</description></field>
+        <field name="name" type="long-varchar"></field>
+        <field name="startTime" type="date-time"></field>
+		<field name="endTime" type="date-time"></field>
+		<field name="distance" type="numeric"></field>
+		<field name="refuelQuantity" type="numeric"></field>
+		<field name="startMeterReading" type="numeric"></field>
+		<field name="endMeterReading" type="numeric"></field>
+        <field name="vehicleId" type="id"></field>
+		<field name="driverId" type="id"></field>
+		<field name="fuelId" type="id"></field>
+		<prim-key field="id"/>
+		 <relation type="one" fk-name="TRIP_VEHICLE" rel-entity-name="fmVehicle">
+        	<key-map field-name="vehicleId"/>
+      	</relation>
+      	<relation type="one" fk-name="TRIP_DRIVER" rel-entity-name="fmDriver">
+        	<key-map field-name="driverId"/>
+      	</relation>
+      	<relation type="one" fk-name="TRIP_FUEL" rel-entity-name="fmFuel">
+        	<key-map field-name="fuelId"/>
+      	</relation>
+    </entity>
+    
+    <entity entity-name="fmFuel" package-name="org.apache.ofbiz.fleetmanagement" title="Fleet Management Fuel Entity">
+        <field name="fuelId" type="id"><description>primary sequenced ID</description></field>
+        <field name="name" type="short-varchar"></field>
+		<field name="type" type="short-varchar"></field>
+		<field name="rate" type="floating-point"></field>
+        <prim-key field="fuelId"/>
     </entity>
 
 </entitymodel>
