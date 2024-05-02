@@ -23,9 +23,17 @@ under the License.
     <!-- ========================================================= -->
     <!-- ======================== Defaults ======================= -->
     <!-- ========================================================= -->
-    <title>Entity of FleetManagement Component</title>
-    <description>None</description>
+    <title>Vehicle Entity of FleetManagement Component</title>
+    <description>Vehicle Entity of FleetManagement Component</description>
     <copyright></copyright>
-    <version></version>
+    <version>1.0</version>
+    
+    <entity entity-name="fmVehicle" package-name="org.apache.ofbiz.fleetmanagement" title="Fleet Management Vehicle Entity">
+        <field name="vehicleId" type="id"><description>primary sequenced ID</description></field>
+        <field name="vehicleNumber" type="short-varchar"></field>
+		<field name="vehicleDescription" type="description"></field>
+		<field name="vehicleType" type="short-varchar"></field>
+        <prim-key field="vehicleId"/>
+    </entity>
 
 </entitymodel>
